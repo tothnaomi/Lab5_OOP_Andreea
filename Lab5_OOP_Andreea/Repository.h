@@ -10,18 +10,17 @@ class Repo
 {
 private:
 	std::vector <Film> listOfMovies;
-	std::vector <Film> get_list() const;
-	/* returns the position of the object or -1 if the object is not in the list */
-	int search(std::string titel, std::string genre, int jahr);
-
 
 public:
 	
+	std::vector <Film> get_list() const;
 
 	/* this function deletes a movie from the repo
 	ONLY FOR THE ADMIN */
 	void loschen(std::string titel, std::string genre, int jahr);
 
+	/* returns the position of the object or -1 if the object is not in the list */
+	int search(std::string titel, std::string genre, int jahr);
 
 	Film* search_movie(std::string titel, std::string genre, int jahr);
 
@@ -44,7 +43,7 @@ public:
 	void print_all_movies();
 
 	/* prints all the movies from the repo (application), which have a specific genre */
-	std::vector<Film> print_all_movies(std::string genre);// get_all_movies -> fara cout si cin
+	std::vector<Film> print_all_movies(std::string genre);
 
 	void hunfugen(Film film);
 };

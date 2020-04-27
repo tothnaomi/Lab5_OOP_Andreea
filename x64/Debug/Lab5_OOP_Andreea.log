@@ -1,3 +1,11 @@
-﻿  Watchtrailer.cpp
+﻿  App.cpp
+C:\Users\deea_\source\repos\Lab5_OOP_Andreea\App.cpp(208,67): error C2248: 'Repo::get_list': cannot access private member declared in class 'Repo'
+C:\Users\deea_\source\repos\Lab5_OOP_Andreea\Repository.h(13): message : see declaration of 'Repo::get_list'
+C:\Users\deea_\source\repos\Lab5_OOP_Andreea\Repository.h(9): message : see declaration of 'Repo'
+  Controller.cpp
+  Repository.cpp
+  Watchlist.cpp
+C:\Users\deea_\source\repos\Lab5_OOP_Andreea\Watchlist.cpp(26,20): warning C4930: 'std::vector<Film,std::allocator<Film>> get_list(void)': prototyped function not called (was a variable definition intended?)
+  Watchtrailer.cpp
 C:\Users\deea_\source\repos\Lab5_OOP_Andreea\Watchtrailer.cpp(18,20): warning C4930: 'std::vector<Film,std::allocator<Film>> get_titel(void)': prototyped function not called (was a variable definition intended?)
-  Lab5_OOP_Andreea.vcxproj -> C:\Users\deea_\Source\Repos\Lab5_OOP_Andreea\x64\Debug\Lab5_OOP_Andreea.exe
+  Generating Code...
