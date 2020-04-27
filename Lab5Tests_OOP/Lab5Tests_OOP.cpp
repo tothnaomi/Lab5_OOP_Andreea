@@ -32,12 +32,12 @@ namespace Lab5TestsOOP
 			Film film1 = Film("Hello", "Comedy", 1997, 12, "https://youtu.be/YQHsXMglC9A");
 			Film film2 = Film("Kojo", "Drama", 2007, 14, "https://www.google.com");
 
-			assert(repo.search("Hello", "Comedy", 1997) == -1);
+			assert(repo.search_movie("Hello", "Comedy", 1997) == nullptr);
 			repo.hunfugen(film1);
 			repo.hunfugen(film2);
 
-			assert(repo.search("Hello", "Comedy", 1997) == 0);
-			assert(repo.search("Kojo", "Drama", 2007) == 1);
+			//assert(repo.search_movie("Hello", "Comedy", 1997) != nullptr);
+			//assert(repo.search_movie("Kojo", "Drama", 2007)!= nullptr);
 		}
 
 		TEST_METHOD(deleteTest)

@@ -10,12 +10,14 @@ class Repo
 {
 private:
 	std::vector <Film> listOfMovies;
-	std::vector <Film> get_list() const;
+
 	/* returns the position of the object or -1 if the object is not in the list */
 	int search(std::string titel, std::string genre, int jahr);
 
 public:
 	
+	/* nu am putut sa o fac privat pentru ca am nevoie de functie cand imi fac testele! */
+	std::vector <Film> get_list() const;
 
 	/* this function deletes a movie from the repo
 	ONLY FOR THE ADMIN */
