@@ -17,6 +17,9 @@ int main()
     Controller cont = Controller();
     cont.set_repo(&repo);
 
+    Watchlist watchlist;
+    Watchtrailer watchtrailer;
+
     Film film1 = Film("Colour", "Drama", 2019, 2715, "https://youtu.be/tySUZIiXObc");
     Film film2 = Film("Skin", "Comedy", 2019, 20000, "https://youtu.be/S6g2VMnmFRk");
     Film film3 = Film("Dolemite", "Comedy", 2017, 15478, "https://youtu.be/Ws1YIKsuTjQ");
@@ -188,8 +191,6 @@ int main()
     else if (modus == "User")
     {
         std::cout << "Hello " << name << " User!:)" << std::endl;
-        Watchlist watchlist;
-        Watchtrailer watchtrailer;
         std::vector <Film> movies_with_genre;
 
         while (true)

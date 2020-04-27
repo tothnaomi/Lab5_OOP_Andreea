@@ -26,5 +26,15 @@ void Watchlist::see_watchlist(Film film)
 	std::vector<Film> get_list();
 }
 
+bool Watchlist::in_watchlist(std::string titel, std::string genre, int jahr)
+{
+	for (int i = 0; i < this->get_list().size(); i++)
+	{
+		if (this->list[i].get_titel() == titel && this->list[i].get_genre() == genre && this->list[i].get_erscheinungsjahr() == jahr)
+			return true;
+	}
+	return false;
+}
+
 
 

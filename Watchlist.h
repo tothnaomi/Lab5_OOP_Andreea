@@ -27,4 +27,6 @@ public:
 
 	/* see the user's watchlist */
 	void see_watchlist(Film film);
+
+	bool in_watchlist(std::string titel, std::string genre, int jahr);
 }; 

@@ -14,7 +14,6 @@ private:
 	/* returns the position of the object or -1 if the object is not in the list */
 	int search(std::string titel, std::string genre, int jahr);
 
-
 public:
 	
 

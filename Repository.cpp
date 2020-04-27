@@ -126,5 +126,5 @@ std::vector<Film> Repo::print_all_movies(std::string genre)
 void Repo::hunfugen(Film film)
 {
 	/* we have to verify if the movie is already in the list or not */
-	if (this->search(film.get_titel(), film.get_genre(), film.get_erscheinungsjahr()) == -1) this->listOfMovies.push_back(film);
+	if (this->search_movie(film.get_titel(), film.get_genre(), film.get_erscheinungsjahr()) == nullptr) this->listOfMovies.push_back(film);
 }
