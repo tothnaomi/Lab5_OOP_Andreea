@@ -6,7 +6,7 @@ class Film
 private:
 
 	std::string titel;
-	std::string genre; // category of music
+	std::string genre; // category of movie
 	int erscheinungsjahr;
 	int likes;
 	std::string linkTrailer;

@@ -143,6 +143,7 @@
     <ClInclude Include="Filme.h" />
     <ClInclude Include="Repository.h" />
     <ClInclude Include="Watchlist.h" />
+    <ClInclude Include="Watchtrailer.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="App.cpp" />
@@ -151,6 +152,7 @@
     <ClCompile Include="Filme.cpp" />
     <ClCompile Include="Repository.cpp" />
     <ClCompile Include="Watchlist.cpp" />
+    <ClCompile Include="Watchtrailer.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

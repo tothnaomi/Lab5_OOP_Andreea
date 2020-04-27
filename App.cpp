@@ -4,6 +4,7 @@
 #include "Repository.h"
 #include "Filme.h"
 #include "Watchlist.h"
+#include "Watchtrailer.h"
 
 /* IMPORTANT: opening an url: system (std::string("start " + url).c_str()) -> url is the string of the actual url */
 
@@ -188,6 +189,7 @@ int main()
     {
         std::cout << "Hello " << name << " User!:)" << std::endl;
         Watchlist watchlist;
+        Watchtrailer watchtrailer;
         std::vector <Film> movies_with_genre;
 
         while (true)
@@ -221,14 +223,27 @@ int main()
                     std::string url = movies_with_genre[i].get_link();
                     system(std::string("start " + url).c_str());
                     int option2;
-                    std::cout << "1: Add to my Watchlist, 2: Next, 3: Exit " << std::endl;
+                    std::cout << "1: Add to my Watchlist" <<std::endl << "2: instantly add movie to watchlist if you like the trailer" <<std::endl << "3: go to next movie trailer" << std::endl << "4:delete movie from watchlist" << std::endl << "5:see the whole watchlist" << std::endl << "6:break" << std::endl;
                     std::cin >> option2;
                     if (option2 == 1)
                     {
                         watchlist.hinfugen(movies_with_genre[i]);
                     }
+                    if (option2 == 2)
+                    {
+                        watchtrailer.insert_wenn_trailer_magt(movies_with_genre[i]);
+                    }
                     if (option2 == 3)
+                    {
+                        watchtrailer.next_trailer(movies_with_genre[i]);
+                    }
+                    if (option2 == 4)
+                        watchlist.loschen(movies_with_genre[i]);
+                    if (option2 == 5)
+                        watchlist.see_watchlist(movies_with_genre[i]);
+                    if (option2 == 6)
                         break;
+
                 }
 
             }

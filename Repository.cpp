@@ -24,6 +24,11 @@ int Repo::search(std::string titel, std::string genre, int jahr)
 	}
 }
 
+Film* Repo::search_movie(std::string titel, std::string genre, int jahr)
+{
+	return nullptr;
+}
+
 
 void Repo::loschen(std::string titel, std::string genre, int jahr)
 {
