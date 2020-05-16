@@ -18,177 +18,168 @@ void MenuForTheAdmin::printMenuForUpdate()
 
 void MenuForTheAdmin::run()
 {
-	this->printOptionsForCsvOrHtml();
-	string CSVorHTML;
-	cin >> CSVorHTML;
-	if (CSVorHTML == "CSV")
+	TXT* txt = new TXT();
+	txt->readFromFile();
+
+	Repo* repo = new Repo(txt->getList());
+	Controller cont = Controller(repo);
+
+	while (true)
 	{
-		CSV* csv = new CSV();
-		csv->readFromFile();
-		csv->printAll();
-		Repo* repo = new Repo(csv->getList());
-		Controller cont = Controller(repo);
+		int option;
+		this->printMenu();
+		cin >> option;
 
-		while (true)
+		if (option == 1)
 		{
-			int option;
-			this->printMenu();
-			cin >> option;
-
-			if (option == 1)
+			// add a movie
+			std::string titel;
+			std::string genre;
+			int jahr;
+			int likes;
+			std::string link;
+			std::cout << "What is the title?";
+			std::cin >> titel;
+			std::cout << "What is the genre?";
+			std::cin >> genre;
+			std::cout << "What is the year?";
+			std::cin >> jahr;
+			std::cout << "How many likes are?";
+			std::cin >> likes;
+			std::cout << "What is the link?";
+			std::cin >> link;
+			try
 			{
-				// add a movie
-				std::string titel;
-				std::string genre;
-				int jahr;
-				int likes;
-				std::string link;
-				std::cout << "What is the title?";
-				std::cin >> titel;
-				std::cout << "What is the genre?";
-				std::cin >> genre;
-				std::cout << "What is the year?";
-				std::cin >> jahr;
-				std::cout << "How many likes are?";
-				std::cin >> likes;
-				std::cout << "What is the link?";
-				std::cin >> link;
-				try
-				{
-					cont.addMovie(titel, genre, jahr, likes, link);
-					cont.printController();
-					csv->setList(cont.getRepositry().getVektor());
-					csv->writeToTheFile();
-				}
-				catch (SchonExists & error)
-				{
-					error.printError();
-				}
+				cont.addMovie(titel, genre, jahr, likes, link);
+				cont.printController();
+				txt->setList(cont.getRepositry().getVektor());
+				txt->writeToTheFile();
 			}
-			if (option == 2)
+			catch (SchonExists & error)
 			{
-				// delete a movie
-				std::string titel;
-				std::string genre;
-				int jahr;
-				std::cout << "What is the title?";
-				std::cin >> titel;
-				std::cout << "What is the genre?";
-				std::cin >> genre;
-				std::cout << "What is the year?";
-				std::cin >> jahr;
+				error.printError();
+			}
+		}
+		if (option == 2)
+		{
+			// delete a movie
+			std::string titel;
+			std::string genre;
+			int jahr;
+			std::cout << "What is the title?";
+			std::cin >> titel;
+			std::cout << "What is the genre?";
+			std::cin >> genre;
+			std::cout << "What is the year?";
+			std::cin >> jahr;
 
+			try
+			{
+				cont.deleteMovie(titel, genre, jahr);
+				cont.printController();
+				txt->setList(cont.getRepositry().getVektor());
+				txt->writeToTheFile();
+			}
+			catch (NotExistsError & error)
+			{
+				error.printError();
+			}
+		}
+		if (option == 3)
+		{
+			//update a movie
+			std::string titel;
+			std::string genre;
+			int jahr;
+			std::cout << "What is the title?";
+			std::cin >> titel;
+			std::cout << "What is the genre?";
+			std::cin >> genre;
+			std::cout << "What is the year?";
+			std::cin >> jahr;
+
+			this->printMenuForUpdate();
+			int option2;
+			cin >> option2;
+			if (option2 == 1)
+			{
+				//update titel
+				string newTitel;
+				cout << "What is the new Title?\n";
+				cin >> newTitel;
 				try
 				{
-					cont.deleteMovie(titel, genre, jahr);
-					cont.printController();
-					csv->setList(cont.getRepositry().getVektor());
-					csv->writeToTheFile();
+					cont.updateTitel(titel, genre, jahr, newTitel);
+					txt->setList(cont.getRepositry().getVektor());
+					txt->writeToTheFile();
 				}
 				catch (NotExistsError & error)
 				{
 					error.printError();
 				}
 			}
-			if (option == 3)
+			if (option2 == 2)
 			{
-				//update a movie
-				std::string titel;
-				std::string genre;
-				int jahr;
-				std::cout << "What is the title?";
-				std::cin >> titel;
-				std::cout << "What is the genre?";
-				std::cin >> genre;
-				std::cout << "What is the year?";
-				std::cin >> jahr;
-
-				this->printMenuForUpdate();
-				int option2;
-				cin >> option2;
-				if (option2 == 1)
+				// update genre
+				string newGenre;
+				cout << "What is the new Genre?\n";
+				cin >> newGenre;
+				try
 				{
-					//update titel
-					string newTitel;
-					cout << "What is the new Title?\n";
-					cin >> newTitel;
-					try
-					{
-						cont.updateTitel(titel, genre, jahr, newTitel);
-						csv->setList(cont.getRepositry().getVektor());
-						csv->writeToTheFile();
-					}
-					catch (NotExistsError & error)
-					{
-						error.printError();
-					}
+					cont.updateGenre(titel, genre, jahr, newGenre);
+					txt->setList(cont.getRepositry().getVektor());
+					txt->writeToTheFile();
 				}
-				if (option2 == 2)
+				catch (NotExistsError & error)
 				{
-					// update genre
-					string newGenre;
-					cout << "What is the new Genre?\n";
-					cin >> newGenre;
-					try
-					{
-						cont.updateGenre(titel, genre, jahr, newGenre);
-						csv->setList(cont.getRepositry().getVektor());
-						csv->writeToTheFile();
-					}
-					catch (NotExistsError & error)
-					{
-						error.printError();
-					}
-				}
-				if (option2 == 3)
-				{
-					//update jahr
-					int newJahr;
-					cout << "What is the new Year?\n";
-					cin >> newJahr;
-					try
-					{
-						cont.updateJahr(titel, genre, jahr, newJahr);
-						csv->setList(cont.getRepositry().getVektor());
-						csv->writeToTheFile();
-					}
-					catch (NotExistsError & error)
-					{
-						error.printError();
-					}
-				}
-				if (option2 == 4)
-				{
-					// update link
-					string newLink;
-					cout << "What is the new link?\n";
-					cin >> newLink;
-					try
-					{
-						cont.updateLink(titel, genre, jahr, newLink);
-						csv->setList(cont.getRepositry().getVektor());
-						csv->writeToTheFile();
-					}
-					catch (NotExistsError & error)
-					{
-						error.printError();
-					}
-				}
-				if (option2 == 5)
-				{
-					break;
+					error.printError();
 				}
 			}
-			if (option == 4)
+			if (option2 == 3)
+			{
+				//update jahr
+				int newJahr;
+				cout << "What is the new Year?\n";
+				cin >> newJahr;
+				try
+				{
+					cont.updateJahr(titel, genre, jahr, newJahr);
+					txt->setList(cont.getRepositry().getVektor());
+					txt->writeToTheFile();
+				}
+				catch (NotExistsError & error)
+				{
+					error.printError();
+				}
+			}
+			if (option2 == 4)
+			{
+				// update link
+				string newLink;
+				cout << "What is the new link?\n";
+				cin >> newLink;
+				try
+				{
+					cont.updateLink(titel, genre, jahr, newLink);
+					txt->setList(cont.getRepositry().getVektor());
+					txt->writeToTheFile();
+				}
+				catch (NotExistsError & error)
+				{
+					error.printError();
+				}
+			}
+			if (option2 == 5)
 			{
 				break;
 			}
 		}
+		if (option == 4)
+		{
+			break;
+		}
 	}
-	if (CSVorHTML == "HTML")
-	{
 
-	}
 }
 
 void MenuForTheUser::printOptionsForCsvOrHtml()
@@ -216,105 +207,116 @@ void MenuForTheUser::run()
 	this->printOptionsForCsvOrHtml();
 	string CSVorHTML;
 	cin >> CSVorHTML;
-	if (CSVorHTML == "CSV")
+
+	TXT* txt = new TXT();
+	txt->readFromFile();
+	Repo* repo = new Repo(txt->getList());
+	Controller cont = Controller(repo);
+	CSV* csv = new CSV();
+	HTML* html = new HTML();
+	//html->createFile("informatii.html");
+
+	Watchlist myWatchlist;
+	while (true)
 	{
-		CSV* csv = new CSV();
-		csv->readFromFile();
-		csv->printAll();
-		Repo* repo = new Repo(csv->getList());
-		Controller cont = Controller(repo);
-		Watchlist myWatchlist;
-		while (true)
+		int option;
+		this->printMenu();
+		cin >> option;
+
+		if (option == 1)
 		{
-			int option;
-			this->printMenu();
-			cin >> option;
+			std::cout << "Please introduce here a genre: ";
+			std::string genre;
+			std::cin >> genre;
 
-			if (option == 1)
+			std::vector<Film*> moviesWithGenre;
+			if (genre == "")
+				moviesWithGenre = cont.getRepositry().getVektor();
+			else
 			{
-				std::cout << "Please introduce here a genre: ";
-				std::string genre;
-				std::cin >> genre;
+				moviesWithGenre = cont.alleFilmeMitEinGenre(genre);
+			}
 
-				std::vector<Film*> moviesWithGenre;
-				if (genre == "")
-					moviesWithGenre = cont.getRepositry().getVektor();
-				else
+			if (moviesWithGenre.size() == 0) cout << "There are no movies with this genre!" << endl;
+			for (int i = 0; i < moviesWithGenre.size(); i++)
+			{
+				std::cout << moviesWithGenre[i]->getTitel() << ", " << moviesWithGenre[i]->getGenre() << ", " << moviesWithGenre[i]->getJahr() << std::endl;
+				std::string url = moviesWithGenre[i]->getLink();
+				system(std::string("start " + url).c_str());
+				int option2;
+				std::cout << "1: Add to my Watchlist, 2: Next, 3: Exit " << std::endl;
+				std::cin >> option2;
+				if (option2 == 1)
 				{
-					moviesWithGenre = cont.alleFilmeMitEinGenre(genre);
+					myWatchlist.addMovie(moviesWithGenre[i]);
+					csv->setList(myWatchlist.getList());
+					csv->writeToTheFile();
+					html->setList(myWatchlist.getList());
+					html->writeToTheFile();
 				}
+				if (option2 == 3)
+					break;
+			}
+		}
+		else if (option == 2)
+		{
+			std::string titel;
+			std::string genre;
+			int jahr;
 
-				if (moviesWithGenre.size() == 0) cout << "There are no movies with this genre!" << endl;
-				for (int i = 0; i < moviesWithGenre.size(); i++)
+			std::string like;
+
+			std::cout << "What is the title?";
+			std::cin >> titel;
+
+			std::cout << "What is the genre?";
+			std::cin >> genre;
+
+			std::cout << "What is the year?";
+			std::cin >> jahr;
+
+			std::cout << "Did you like it?";
+			std::cin >> like;
+
+			if (like == "yes")
+			{
+				bool found = false;
+				for (auto movie : myWatchlist.getList())
 				{
-					std::cout << moviesWithGenre[i]->getTitel() << ", " << moviesWithGenre[i]->getGenre() << ", " << moviesWithGenre[i]->getJahr() << std::endl;
-					std::string url = moviesWithGenre[i]->getLink();
-					system(std::string("start " + url).c_str());
-					int option2;
-					std::cout << "1: Add to my Watchlist, 2: Next, 3: Exit " << std::endl;
-					std::cin >> option2;
-					if (option2 == 1)
+					if (movie->getTitel() == titel && movie->getGenre() == genre && movie->getJahr() == jahr)
 					{
-						myWatchlist.addMovie(moviesWithGenre[i]);
+						found = true;
+						movie->setLike(movie->getLike() + 1);
+						std::cout << movie->getLike() << std::endl;
 					}
-					if (option2 == 3)
+					if (found)
 						break;
 				}
-			}
-			else if (option == 2)
-			{
-				std::string titel;
-				std::string genre;
-				int jahr;
-
-				std::string like;
-
-				std::cout << "What is the title?";
-				std::cin >> titel;
-
-				std::cout << "What is the genre?";
-				std::cin >> genre;
-
-				std::cout << "What is the year?";
-				std::cin >> jahr;
-
-				std::cout << "Did you like it?";
-				std::cin >> like;
-
-				if (like == "yes")
-				{
-					bool found = false;
-					for (auto movie : myWatchlist.getList())
-					{
-						if (movie->getTitel() == titel && movie->getGenre() == genre && movie->getJahr() == jahr)
-						{
-							found = true;
-							movie->setLike(movie->getLike() + 1);
-							std::cout << movie->getLike() << std::endl;
-						}
-						if (found)
-							break;
-					}
-					if (not found)
-						std::cout << "This movie is not in your watchlist!" << std::endl;
-				}
-				else
-				{
-					myWatchlist.deleteMovie(titel, genre, jahr);
-				}
-			}
-			else if (option == 3)
-			{
-				myWatchlist.seeWatchlist();
-			}
-			else if (option == 4)
-			{
-				break;
+				if (not found)
+					std::cout << "This movie is not in your watchlist!" << std::endl;
+				else myWatchlist.deleteMovie(titel, genre, jahr);
 			}
 			else
 			{
-				std::cout << "You did something wrong! PLease try again. " << std::endl;
+				myWatchlist.deleteMovie(titel, genre, jahr);
 			}
+			csv->setList(myWatchlist.getList());
+			csv->writeToTheFile();
+			html->setList(myWatchlist.getList());
+			html->writeToTheFile();
+		}
+		else if (option == 3)
+		{
+			myWatchlist.seeWatchlist();
+			html->openHTML();
+		}
+		else if (option == 4)
+		{
+			break;
+		}
+		else
+		{
+			std::cout << "You did something wrong! PLease try again. " << std::endl;
 		}
 	}
 }

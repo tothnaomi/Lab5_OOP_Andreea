@@ -4,178 +4,218 @@
 #include "../Controller.h"
 #include <cassert>
 #include "../Watchlist.h"
+#include "../Persistor.h"
 
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 
-namespace Lab5TestsOOP
+namespace Lab6TestOOP
 {
-	TEST_CLASS(ControllerTest)
+	TEST_CLASS(FilmTest)
 	{
 	public:
-		TEST_METHOD(addTest)
-		{	
-			Repo repo;
-			Controller cont = Controller();
-			cont.set_repo(&repo);
-			Film film1 = Film("Hello", "Comedy", 1997, 12, "https://youtu.be/YQHsXMglC9A");
-			Film film2 = Film("Kojo", "Drama", 2007, 14, "https://www.google.com");
 
-			cont.hinfugen(film1);
-			assert(repo.get_list().size() == 1);
-			cont.hinfugen(film2);
-			assert(repo.get_list().size() == 2);
+		TEST_METHOD(SettersAndGetters)
+		{
+			Film movie = Film("Hello", "Drama", 2019, 254788, "https://www.google.com");
+			Assert::IsTrue(movie.getTitel() == "Hello");
+			movie.setGenre("Love");
+			Assert::IsTrue(movie.getGenre() == "Love");
+			movie.setJahr(2000);
+			Assert::IsTrue(movie.getJahr() == 2000);
+			movie.setLink("https://youtu.be/YQHsXMglC9A");
+			Assert::IsTrue(movie.getLink() == "https://youtu.be/YQHsXMglC9A");
+		}
+	};
+
+	TEST_CLASS(RepoTest)
+	{
+		TEST_METHOD(AddFilm)
+		{
+			vector<Film*> movies;
+			Repo repo = Repo(movies);
+			repo.addFilm("Hello", "Drama", 2019, 1245788, "https://www.google.com");
+			repo.addFilm("Jumbo", "Love", 2000, 45177, "https://www.youtube.com");
+			repo.addFilm("Skin", "Comedy", 1997, 45678, "https://www.google.com");
+			Assert::IsTrue(repo.getVektor().size() == 3);
+			Assert::IsTrue(repo.getVektor()[0]->getTitel() == "Hello");
+			Assert::IsTrue(repo.getVektor()[1]->getTitel() == "Jumbo");
 		}
 
-		TEST_METHOD(searchTest)
+		TEST_METHOD(DeleteFilm)
 		{
-			Repo repo;
-			Film film1 = Film("Hello", "Comedy", 1997, 12, "https://youtu.be/YQHsXMglC9A");
-			Film film2 = Film("Kojo", "Drama", 2007, 14, "https://www.google.com");
-
-			assert(repo.search_movie("Hello", "Comedy", 1997) == nullptr);
-			repo.hunfugen(film1);
-			repo.hunfugen(film2);
-
-			//assert(repo.search_movie("Hello", "Comedy", 1997) != nullptr);
-			//assert(repo.search_movie("Kojo", "Drama", 2007)!= nullptr);
-		}
-
-		TEST_METHOD(deleteTest)
-		{
-			Repo repo=Repo();
-			Controller cont = Controller();
-			cont.set_repo(&repo);
-			Film film1 = Film("Hello", "Comedy", 1997, 12, "https://youtu.be/YQHsXMglC9A");
-			Film film2 = Film("Kojo", "Drama", 2007, 14, "https://www.google.com");
-			cont.hinfugen(film1);
-			cont.hinfugen(film2);
-
-			cont.loschen("Hi", "Comedy", 1997);
-			assert(cont.get_repo()->get_list().size() == 2);
-
-			cont.loschen("Hello", "Comedy", 1997);
-			assert(cont.get_repo()->get_list().size() == 1);
-		}
-
-		TEST_METHOD(changingTest)
-		{
-			Repo repo = Repo();
-			Controller cont = Controller();
-			cont.set_repo(&repo);
-			Film film1 = Film("Hello", "Comedy", 1997, 12, "https://youtu.be/YQHsXMglC9A");
-			Film film2 = Film("Kojo", "Drama", 2007, 14, "https://www.google.com");
-
-			cont.bearbeiten_titel("Hello", "Comedy", 1997, "HELLO");
-			cont.bearbeiten_link("HELLO", "Comedy", 1977, "https://www.google.com");
-		
-			std::vector<Film> film = cont.get_repo()->get_list();
-			for (int i = 0; i < film.size(); i++)
+			vector<Film*> movies;
+			Repo repo = Repo(movies);
+			repo.addFilm("Hello", "Drama", 2019, 1245788, "https://www.google.com");
+			repo.addFilm("Jumbo", "Love", 2000, 45177, "https://www.youtube.com");
+			repo.addFilm("Skin", "Comedy", 1997, 45678, "https://www.google.com");
+			repo.deleteMovie("Hello", "Drama", 2019);
+			Assert::IsTrue(repo.getVektor().size() == 2);
+			try
 			{
-				if (i == 0)
-				{
-					assert(film[i].get_titel() == "HELLO");
-					assert(film[i].get_link() == "https://www.google.com");
-					break;
-				}
+				repo.deleteMovie("Hello", "Drama", 2019);
+			}
+			catch (NotExistsError & error)
+			{
 			}
 		}
 
-		TEST_METHOD(printAllWithGenreTest)
+		TEST_METHOD(UpdateTest)
 		{
-			Repo repo = Repo();
-			Controller cont = Controller();
-			cont.set_repo(&repo);
+			vector<Film*> movies;
+			Repo repo = Repo(movies);
+			repo.addFilm("Hello", "Drama", 2019, 1245788, "https://www.google.com");
+			repo.addFilm("Jumbo", "Love", 2000, 45177, "https://www.youtube.com");
+			repo.addFilm("Skin", "Comedy", 1997, 45678, "https://www.google.com");
 
-			Film film1 = Film("Colour", "Drama", 2019, 2715, "https://youtu.be/tySUZIiXObc");
-			Film film2 = Film("Skin", "Comedy", 2019, 20000, "https://youtu.be/S6g2VMnmFRk");
-			Film film3 = Film("Dolemite", "Comedy", 2017, 15478, "https://youtu.be/Ws1YIKsuTjQ");
-			Film film4 = Film("Tigers", "Sci-Fi", 2019, 15748, "https://youtu.be/KyoE0mSJXO8");
-			Film film5 = Film("Invisible", "Romance", 2014, 1457, "https://youtu.be/NRF-Pba3QrE");
-			Film film6 = Film("Kojo", "Drama", 2016, 11287, "https://youtu.be/2l7gC3fa3m0");
-			Film film7 = Film("Crawl", "Drama", 2016, 17589, "https://youtu.be/H6MLJG0RdDE");
-			Film film8 = Film("Burning", "Drama", 2019, 1547, "https://youtu.be/04krY7dl3cE");
-			cont.hinfugen(film1);
-			cont.hinfugen(film2);
-			cont.hinfugen(film3);
-			cont.hinfugen(film4);
-			cont.hinfugen(film5);
-			cont.hinfugen(film6);
-			cont.hinfugen(film7);
-			cont.hinfugen(film8);
-
-			std::vector<Film> moviesWithGenre = cont.print_all_movies("Comedy");
-			assert(moviesWithGenre.size() == 2);
-
-			moviesWithGenre = cont.print_all_movies("Drama");
-			assert(moviesWithGenre.size() == 4);
+			repo.updateTitel("Hello", "Drama", 2019, "HELLO");
+			Assert::IsTrue(repo.getVektor()[0]->getTitel() == "HELLO");
+			try
+			{
+				repo.updateTitel("Hello", "Drama", 2019, "HELLO");
+			}
+			catch (NotExistsError & error)
+			{
+			}
+			repo.updateGenre("Jumbo", "Love", 2000, "Comedy");
+			Assert::IsTrue(repo.getVektor()[1]->getGenre() == "Comedy");
+			repo.updateJahr("Jumbo", "Comedy", 2000, 2020);
+			Assert::IsTrue(repo.getVektor()[1]->getJahr() == 2020);
+			repo.updateLink("Jumbo", "Comedy", 2020, "HTTPS://WWW.GOOGLE.COM");
+			Assert::IsTrue(repo.getVektor()[1]->getLink() == "HTTPS://WWW.GOOGLE.COM");
 		}
-
 	};
 
-	TEST_CLASS(FilmTest)
+	TEST_CLASS(ControllerTest)
 	{
 		TEST_METHOD(ConstructorTest)
 		{
-			Film film1 = Film("Colour", "Drama", 2019, 2715, "https://youtu.be/tySUZIiXObc");
-			Film film2 = Film("Skin", "Comedy", 2019, 20000, "https://youtu.be/S6g2VMnmFRk");
-
-			assert(film1.get_titel() == "Colour");
-			assert(film1.get_genre() == "Drama");
-			assert(film1.get_erscheinungsjahr() == 2019);
-			assert(film1.get_likes() == 2715);
-			assert(film1.get_link() == "https://youtu.be/tySUZIiXObc");
-
-			film2.set_titel("SKIN");
-			assert(film2.get_titel() == "SKIN");
-			film2.set_genre("Drama");
-			assert(film2.get_genre() == "Drama");
-			film2.set_erscheinungsjahr(2020);
-			assert(film2.get_erscheinungsjahr() == 2020);
-			film2.set_likes(12);
-			assert(film2.get_likes() == 12);
-			film2.set_link("https://www.google.com");
-			assert(film2.get_link() == "https://www.google.com");
+			vector<Film*> movies;
+			Repo repo = Repo(movies);
+			Controller cont = Controller(&repo);
+			Assert::IsTrue(cont.getRepositry() == repo);
 		}
 
-		TEST_METHOD(operatorOverloadTest)
+		TEST_METHOD(AddTest)
 		{
-			Film film1 = Film("Colour", "Drama", 2019, 2715, "https://youtu.be/tySUZIiXObc");
-			Film film2 = Film("Skin", "Comedy", 2019, 20000, "https://youtu.be/S6g2VMnmFRk");
-			Film film3 = Film("Colour", "Drama", 2019, 2715, "https://youtu.be/tySUZIiXObc");
+			vector<Film*> movies;
+			Repo repo = Repo(movies);
+			Controller cont = Controller(&repo);
+			cont.addMovie("Hello", "Drama", 2019, 1245788, "https://www.google.com");
+			cont.addMovie("Jumbo", "Love", 2000, 45177, "https://www.youtube.com");
+			cont.addMovie("Skin", "Comedy", 1997, 45678, "https://www.google.com");
+			Assert::IsTrue(cont.getRepositry().getVektor().size() == 3);
+			Assert::IsTrue(cont.getRepositry().getVektor()[0]->getTitel() == "Hello");
+			Assert::IsTrue(cont.getRepositry().getVektor()[1]->getTitel() == "Jumbo");
+			Assert::IsTrue(cont.getRepositry().getVektor()[2]->getTitel() == "Skin");
+		}
 
-			assert(film1.operator==(film2) == false);
-			assert(film1.operator==(film3) == true);
-			assert(film2.operator==(film3) == false);
+		TEST_METHOD(DeleteTest)
+		{
+			vector<Film*> movies;
+			Repo repo = Repo(movies);
+			Controller cont = Controller(&repo);
+			cont.addMovie("Hello", "Drama", 2019, 1245788, "https://www.google.com");
+			cont.addMovie("Jumbo", "Love", 2000, 45177, "https://www.youtube.com");
+			cont.addMovie("Skin", "Comedy", 1997, 45678, "https://www.google.com");
+			cont.deleteMovie("Hello", "Drama", 2019);
+			Assert::IsTrue(cont.getRepositry().getVektor().size() == 2);
+			try
+			{
+				cont.deleteMovie("Hello", "Drama", 2019);
+			}
+			catch (NotExistsError & err)
+			{
+
+			}
+			Assert::IsTrue(cont.getRepositry().getVektor().size() == 2);
+		}
+
+		TEST_METHOD(UpdateTest)
+		{
+			vector<Film*> movies;
+			Repo repo = Repo(movies);
+			Controller cont = Controller(&repo);
+			cont.addMovie("Hello", "Drama", 2019, 1245788, "https://www.google.com");
+			cont.addMovie("Jumbo", "Love", 2000, 45177, "https://www.youtube.com");
+			cont.addMovie("Skin", "Comedy", 1997, 45678, "https://www.google.com");
+			cont.updateTitel("Hello", "Drama", 2019, "HELLO");
+			Assert::IsTrue(cont.getRepositry().getVektor()[0]->getTitel() == "HELLO");
+			try
+			{
+				repo.updateTitel("Hello", "Drama", 2019, "HELLO");
+			}
+			catch (NotExistsError & error)
+			{
+			}
+			cont.updateGenre("Jumbo", "Love", 2000, "Comedy");
+			Assert::IsTrue(cont.getRepositry().getVektor()[1]->getGenre() == "Comedy");
+			cont.updateJahr("Jumbo", "Comedy", 2000, 2020);
+			Assert::IsTrue(cont.getRepositry().getVektor()[1]->getJahr() == 2020);
+			cont.updateLink("Jumbo", "Comedy", 2020, "HTTPS://WWW.GOOGLE.COM");
+			Assert::IsTrue(cont.getRepositry().getVektor()[1]->getLink() == "HTTPS://WWW.GOOGLE.COM");
 		}
 	};
 
 	TEST_CLASS(WatchlistTest)
 	{
-		TEST_METHOD(addTest)
+		TEST_METHOD(AddTest)
 		{
-			Film film1 = Film("Colour", "Drama", 2019, 2715, "https://youtu.be/tySUZIiXObc");
-			Film film2 = Film("Skin", "Comedy", 2019, 20000, "https://youtu.be/S6g2VMnmFRk");
 			Watchlist watchlist;
+			Film movie1 = Film("Hello", "Drama", 2019, 1245788, "https://www.google.com");
+			Film movie2 = Film("Jumbo", "Love", 2000, 45177, "https://www.youtube.com");
+			Film movie3 = Film("Skin", "Comedy", 1997, 45678, "https://www.google.com");
+			watchlist.addMovie(&movie1);
+			watchlist.addMovie(&movie2);
+			watchlist.addMovie(&movie3);
+			Assert::IsTrue(watchlist.getList().size() == 3);
+		}
 
-			watchlist.hinfugen(film1);
-			assert(watchlist.get_list().size() == 1);
-			watchlist.hinfugen(film2);
-			assert(watchlist.get_list().size() == 2);
+		TEST_METHOD(DeleteTest)
+		{
+			Watchlist watchlist;
+			Film movie1 = Film("Hello", "Drama", 2019, 1245788, "https://www.google.com");
+			Film movie2 = Film("Jumbo", "Love", 2000, 45177, "https://www.youtube.com");
+			Film movie3 = Film("Skin", "Comedy", 1997, 45678, "https://www.google.com");
+			watchlist.addMovie(&movie1);
+			watchlist.addMovie(&movie2);
+			watchlist.addMovie(&movie3);
+			Assert::IsTrue(watchlist.getList().size() == 3);
 
-			std::vector<Film> watch = watchlist.get_list();
-			for (int i = 0; i < watch.size(); i++)
-			{
-				if (i == 0)
-				{
-					assert(watch[i].get_titel() == "Colour");
-					assert(watch[i].get_genre() == "Drama");
-				}
-				if (i == 1)
-				{
-					assert(watch[i].get_titel() == "Skin");
-					assert(watch[i].get_genre() == "Comedy");
-				}
-			}
+			watchlist.deleteMovie("Hello", "Drama", 2019);
+			Assert::IsTrue(watchlist.getList().size() == 2);
+			Assert::IsTrue(watchlist.inWatchlist("Hello", "Drama", 2019) == false);
+		}
+
+		TEST_METHOD(InWatchlistTest)
+		{
+			Watchlist watchlist;
+			Film movie1 = Film("Hello", "Drama", 2019, 1245788, "https://www.google.com");
+			Film movie2 = Film("Jumbo", "Love", 2000, 45177, "https://www.youtube.com");
+			Film movie3 = Film("Skin", "Comedy", 1997, 45678, "https://www.google.com");
+			watchlist.addMovie(&movie1);
+			watchlist.addMovie(&movie2);
+			watchlist.addMovie(&movie3);
+
+			Assert::IsTrue(watchlist.inWatchlist("Hello", "Drama", 2019) == true);
+			Assert::IsTrue(watchlist.inWatchlist("Jumbo", "Love", 2000) == false);
+			Assert::IsTrue(watchlist.inWatchlist("Skin", "Comedy", 1997) == false);
+
+			Assert::IsTrue(watchlist.inWatchlist("Hi", "Drama", 2019) == false);
+		}
+	};
+
+	TEST_CLASS(CSVTest)
+	{
+		TEST_METHOD(ReadTest)
+		{
+			CSV csv;
+			csv.readFromFile();
+		}
+
+		TEST_METHOD(ConvertStringToIntTest)
+		{
+			CSV csv;
+			Assert::IsTrue(CSV::convertStringToInt("15") == 15);
 		}
 	};
 }

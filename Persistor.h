@@ -22,6 +22,23 @@ public:
 	static int convertStringToInt(std::string string); // tested
 };
 
+class TXT : public Persistor
+{
+private:
+	vector <Film*> list;
+
+public:
+	vector<Film*> getList() override;
+
+	void setList(std::vector<Film*> list);
+
+	void readFromFile() override;
+
+	void createFile(string name) override;
+
+	void writeToTheFile() override;
+};
+
 class CSV : public Persistor
 {
 private:
@@ -48,8 +65,15 @@ private:
 	vector <Film*> list;
 
 public:
+	virtual vector<Film*> getList() override;
+
+	void setList(std::vector<Film*> filme);
+
+	void createFile(string name) override;
 
 	void readFromFile() override;
 
+	void openHTML();
+
 	void writeToTheFile() override;
-}; 
+};
