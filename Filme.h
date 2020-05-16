@@ -1,5 +1,6 @@
 #pragma once
 #include <string>
+/* this is lab 6*/
 
 class Film
 {
