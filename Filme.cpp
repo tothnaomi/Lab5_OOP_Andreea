@@ -1,76 +1,66 @@
 #include "Filme.h"
-#include <iostream>
 
-Film::Film(std::string titel, std::string genre, int jahr, int likes, std::string link)
+Film::Film(string titel, string genre, int jahr, int like, string link)
 {
 	this->titel = titel;
 	this->genre = genre;
-	this->erscheinungsjahr = jahr;
-	this->likes = likes;
-	this->linkTrailer = link;
+	this->jahr = jahr;
+	this->like = like;
+	this->link = link;
 }
 
-void Film::set_titel(std::string titel)
+void Film::openTheLink(string link)
 {
-	this->titel = titel;
+	system(std::string("start " + link).c_str());
 }
 
-void Film::set_genre(std::string genre)
+void Film::setTitel(string neueTitel)
 {
-	this->genre = genre;
+	this->titel = neueTitel;
 }
 
-void Film::set_erscheinungsjahr(int jahr)
+void Film::setGenre(string neueGenre)
 {
-	this->erscheinungsjahr = jahr;
+	this->genre = neueGenre;
 }
 
-void Film::set_likes(int like)
+void Film::setJahr(int neuesJahr)
 {
-	this->likes = like;
+	this->jahr = neuesJahr;
 }
 
-void Film::set_link(std::string link)
+void Film::setLike(int neueLike)
 {
-	this->linkTrailer = link;
+	this->like = neueLike;
 }
 
-std::string Film::get_titel() const
+void Film::setLink(string neueLink)
+{
+	this->link = neueLink;
+}
+
+std::string Film::getTitel() const
 {
 	return this->titel;
 }
 
-std::string Film::get_genre() const 
+std::string Film::getGenre() const
 {
 	return this->genre;
 }
 
 
-int Film::get_erscheinungsjahr() const
+int Film::getJahr() const
 {
-	return this->erscheinungsjahr;
+	return this->jahr;
 }
 
-int Film::get_likes() const
+int Film::getLike() const
 {
-	return this->likes;
+	return this->like;
 }
 
-std::string Film::get_link() const
+string Film::getLink() const
 {
-	return this->linkTrailer;
-}
-
-void Film::print_movie()
-{
-	std::cout << this->get_titel() << ", " << this->get_genre() << ", " << this->get_erscheinungsjahr() << ", " << this->get_likes() << ", " << this->get_link() << std::endl;
-}
-
-
-bool Film::operator==(Film other)
-{
-	if (this->titel == other.titel && this->genre == other.genre && this->erscheinungsjahr == other.erscheinungsjahr)
-		return true;
-	else
-		return false;
+	return this->link;
 }

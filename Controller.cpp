@@ -1,59 +1,65 @@
 #include "Controller.h"
-#include <iostream>
 
-void Controller::set_repo(Repo* repo)
+Controller::Controller(Repo* newRepo)
 {
-	this->repo = repo;
+	this->repo = newRepo;
 }
 
-Repo* Controller::get_repo() const
+Repo Controller::getRepositry() const
 {
-	return this->repo;
+	return *(this->repo);
 }
 
-void Controller::hinfugen(Film film)
+void Controller::deleteMovie(string titel, string genre, int jahr)
 {
-	this->repo->hunfugen(film);
+	this->repo->deleteMovie(titel, genre, jahr);
 }
 
-void Controller::loschen(std::string titel, std::string genre, int jahr)
+void Controller::addMovie(string titel, string genre, int jahr, int likes, string link)
 {
-	(*this->repo).loschen(titel, genre, jahr);
+	this->repo->addFilm(titel, genre, jahr, likes, link);
 }
 
-void Controller::bearbeiten_titel(std::string titel, std::string genre, int jahr, std::string new_titel)
+void Controller::updateTitel(string titel, string genre, int jahr, std::string newTitel)
 {
-	(*this->repo).bearbeiten_titel(titel, genre, jahr, new_titel);
+	this->repo->updateTitel(titel, genre, jahr, newTitel);
 }
 
-void Controller::bearbeiten_genre(std::string titel, std::string genre, int jahr, std::string new_genre)
+void Controller::updateGenre(string titel, string genre, int jahr, std::string newGenre)
 {
-	this->repo->bearbeiten_genre(titel, genre, jahr, new_genre);
+	this->repo->updateGenre(titel, genre, jahr, newGenre);
 }
 
-void Controller::bearbeiten_year(std::string titel, std::string genre, int jahr, int new_year)
+void Controller::updateJahr(string titel, string genre, int jahr, int newJahr)
 {
-	(*this->repo).bearbeiten_erscheinungsjahr(titel, genre, jahr, new_year);
+	this->updateJahr(titel, genre, jahr, newJahr);
 }
 
-void Controller::bearbeiten_likes(std::string titel, std::string genre, int jahr, int new_likes)
+void Controller::updateLike(string titel, string genre, int jahr, int newLikes)
 {
-	(*this->repo).bearbeiten_likes(titel, genre, jahr, new_likes);
+	this->repo->updateLike(titel, genre, jahr, newLikes);
 }
 
-void Controller::bearbeiten_link(std::string titel, std::string genre, int jahr, std::string new_link)
+void Controller::updateLink(string titel, string genre, int jahr, std::string newLink)
 {
-	(*this->repo).bearbeiten_link(titel, genre, jahr, new_link);
+	this->repo->updateLink(titel, genre, jahr, newLink);
 }
 
-void Controller::print_all_movies()
+std::vector<Film*> Controller::alleFilmeMitEinGenre(std::string genre) const
 {
-	this->repo->print_all_movies();
+	std::vector<Film*> moviesWithGenre;
+	for (auto elem : this->repo->getVektor())
+	{
+		if (elem->getGenre() == genre)
+			moviesWithGenre.push_back(elem);
+	}
+	return moviesWithGenre;
 }
 
-std::vector<Film> Controller::print_all_movies(std::string genre)
+void Controller::printController() const
 {
-	std::vector<Film> movies = this->repo->print_all_movies(genre);
-	return movies;
+	for (auto elem : this->repo->getVektor())
+	{
+		cout << elem->getTitel() << ", " << elem->getGenre() << ", " << elem->getJahr() << ", " << elem->getLike() << ", " << elem->getLink() << endl;
+	}
 }
-

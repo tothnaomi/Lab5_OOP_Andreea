@@ -1,32 +1,26 @@
 #pragma once
 #include <vector>
 #include "Filme.h"
-#include <string>
+#include <iostream>
+
+using namespace std;
 
 class Watchlist
 {
 private:
-	std::vector <Film> list;
+	vector <Film*> list;
 
 public:
+	vector <Film*> getList() const;
 
-	/* getter */
-	std::vector <Film> get_list() const;
+	// trebuie sa facem cumva legatura intre repository si Watchlist ca sa adaugam in Watchlist aceeasi pointer cu un film, ca
+	// si in repository 
+	// cautam in meniu cu repo.searchMovie(titlu, gen, an) si adaugam pointerul respectiv
+	void addMovie(Film* movie);
 
-	/* adding an element to the watchlist */
-	void hinfugen(Film film);
+	void deleteMovie(string titel, string genre, int jahr);
 
-	/* deleting elemnt from watchlist */
-	void loschen(Film film);
+	bool inWatchlist(string titel, string genre, int jahr);
 
-	/* if the user likes the trailer, add movie to watchlist 
-	void insert_wenn_trailer_magt(Film film);
-
-	if the user doesn't like the trailer, go to next trailer 
-	void next_trailer(Film film); */
-
-	/* see the user's watchlist */
-	void see_watchlist(Film film);
-
-	bool in_watchlist(std::string titel, std::string genre, int jahr);
-}; 
+	void seeWatchlist();
+};

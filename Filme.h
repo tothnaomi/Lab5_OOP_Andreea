@@ -1,48 +1,31 @@
 #pragma once
 #include <string>
-/* this is lab 6*/
+using namespace std;
 
 class Film
 {
 private:
-
-	std::string titel;
-	std::string genre; // category of movie
-	int erscheinungsjahr;
-	int likes;
-	std::string linkTrailer;
+	string titel;
+	string genre;
+	int jahr;
+	int like;
+	string link;
 
 public:
+	Film(string, string, int, int, string);
 
-	Film(std::string titel, std::string genre, int jahr, int likes, std::string link);
+	void openTheLink(string link);
 
-	/* setters */
+	// setters and getter
+	void setTitel(string neueTitel);
+	void setGenre(string neueGenre);
+	void setJahr(int neuesJahr);
+	void setLike(int neueLike);
+	void setLink(string neueLink);
 
-	void set_titel(std::string titel);
-
-	void set_genre(std::string genre);
-
-	void set_erscheinungsjahr(int jahr);
-
-	void set_likes(int like);
-
-	void set_link(std::string link);
-
-	/* getters */
-
-	std::string get_titel() const;
-
-	std::string get_genre() const;
-
-	int get_erscheinungsjahr() const;
-
-	int get_likes() const;
-
-	std::string get_link() const;
-
-	void print_movie();
-
-	/* operator overloading */
-	bool operator == (Film other);
+	string getTitel() const;
+	string getGenre() const;
+	int getJahr() const;
+	int getLike() const;
+	string getLink() const;
 };
-

@@ -1,7 +1,9 @@
 #pragma once
+#include <string>
 #include "Repository.h"
 #include "Error.h"
 #include <iostream>
+using namespace std;
 
 class Controller
 {
@@ -9,28 +11,26 @@ private:
 	Repo* repo;
 
 public:
+	Controller(Repo* newRepo);
 
-	void set_repo(Repo* repo);
+	Repo getRepositry() const;
 
-	Repo* get_repo() const;
+	/* for the admin */
+	void deleteMovie(string, string, int);
 
-	/* this function adds a new movie to the list of movies (in repo)
-	ONLY FOR THE ADMIN. */
-	void hinfugen(Film film);
+	void addMovie(string, string, int, int, string);
 
-	/* deletes a movie from the list of movies */
-	void loschen(std::string titel, std::string genre, int jahr);
+	void updateTitel(string titel, string genre, int jahr, std::string newTitel);
 
-	/* changes something in a given movie */
-	void bearbeiten_titel(std::string titel, std::string genre, int jahr, std::string new_titel);
-	void bearbeiten_genre(std::string titel, std::string genre, int jahr, std::string new_genre);
-	void bearbeiten_year(std::string titel, std::string genre, int jahr, int new_year);
-	void bearbeiten_likes(std::string titel, std::string genre, int jahr, int new_likes);
-	void bearbeiten_link(std::string titel, std::string genre, int jahr, std::string new_link);
+	void updateGenre(string titel, string genre, int jahr, std::string newGenre);
 
-	/* prints all the movies from the repo (application) */
-	void print_all_movies();
+	void updateJahr(string titel, string genre, int jahr, int newJahr);
 
-	/* prints all the movies from the repo (application), which have a specific genre */
-	std::vector<Film> print_all_movies(std::string genre);
+	void updateLike(string titel, string genre, int jahr, int newLikes);
+
+	void updateLink(string titel, string genre, int jahr, std::string newLink);
+
+	std::vector <Film*> alleFilmeMitEinGenre(std::string genre) const;
+
+	void printController() const;
 };

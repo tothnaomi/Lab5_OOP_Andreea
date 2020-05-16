@@ -1,40 +1,56 @@
 #include "Watchlist.h"
-#include "Watchtrailer.h"
-#include "Filme.h"
-#include "Repository.h"
 #include "Error.h"
-#include <iostream>
 
-std::vector<Film> Watchlist::get_list() const
+vector<Film*> Watchlist::getList() const
 {
 	return this->list;
 }
 
-void Watchlist::hinfugen(Film film)
+void Watchlist::addMovie(Film* movie)
 {
-	this->list.push_back(film);
-}
-
-void Watchlist::loschen(Film film)
-{
-	list.erase(list.begin() + 1);
-}
-
-
-void Watchlist::see_watchlist(Film film)
-{
-	std::vector<Film> get_list();
-}
-
-bool Watchlist::in_watchlist(std::string titel, std::string genre, int jahr)
-{
-	for (int i = 0; i < this->get_list().size(); i++)
+	if (this->inWatchlist(movie->getTitel(), movie->getGenre(), movie->getJahr()))
 	{
-		if (this->list[i].get_titel() == titel && this->list[i].get_genre() == genre && this->list[i].get_erscheinungsjahr() == jahr)
+		SchonExists err;
+		throw err;
+	}
+	else
+	{
+		this->list.push_back(movie);
+	}
+}
+
+void Watchlist::deleteMovie(string titel, string genre, int jahr)
+{
+	if (not this->inWatchlist(titel, genre, jahr))
+	{
+		NotExistsError err;
+		throw err;
+	}
+	for (int i = 0; i < this->list.size(); i++)
+	{
+		if (this->list[i]->getGenre() == genre && this->list[i]->getTitel() == titel && this->list[i]->getJahr() == jahr)
+		{
+			this->list.erase(this->list.begin() + i);
+			break;
+		}
+	}
+}
+
+bool Watchlist::inWatchlist(string titel, string genre, int jahr)
+{
+	for (auto elem : this->list)
+	{
+		if (elem->getGenre() == genre && elem->getTitel() == titel && elem->getJahr() == jahr)
 			return true;
 	}
 	return false;
 }
 
+void Watchlist::seeWatchlist()
+{
+	for (auto elem : this->list)
+	{
+		cout << elem->getTitel() << ", " << elem->getGenre() << ", " << elem->getJahr() << ", " << elem->getLike() << ", " << elem->getLink() << endl;
 
-
+	}
+}

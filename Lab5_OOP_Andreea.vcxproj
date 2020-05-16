@@ -141,6 +141,8 @@
     <ClInclude Include="Controller.h" />
     <ClInclude Include="Error.h" />
     <ClInclude Include="Filme.h" />
+    <ClInclude Include="Menu.h" />
+    <ClInclude Include="Persistor.h" />
     <ClInclude Include="Repository.h" />
     <ClInclude Include="Watchlist.h" />
     <ClInclude Include="Watchtrailer.h" />
@@ -148,8 +150,9 @@
   <ItemGroup>
     <ClCompile Include="App.cpp" />
     <ClCompile Include="Controller.cpp" />
-    <ClCompile Include="Error.cpp" />
     <ClCompile Include="Filme.cpp" />
+    <ClCompile Include="Menu.cpp" />
+    <ClCompile Include="Persistor.cpp" />
     <ClCompile Include="Repository.cpp" />
     <ClCompile Include="Watchlist.cpp" />
     <ClCompile Include="Watchtrailer.cpp" />

@@ -1,52 +1,44 @@
 #pragma once
-#include "Filme.h"
 #include "Error.h"
 #include <vector>
-#include <string>
-#include <iostream>
-
+#include "Filme.h"
+#include <sstream>
+using namespace std;
 
 class Repo
 {
+	/* CRUD: create, read, update, delete */
 private:
-	std::vector <Film> listOfMovies;
+	vector<Film*> liste;
 
-	/* returns the position of the object or -1 if the object is not in the list */
-	int search(std::string titel, std::string genre, int jahr);
+	template <typename Param, typename Func>
+	void update(string titel, string genre, int jahr, Param param, Func lambdaFunc);
 
 public:
-	
-	/* nu am putut sa o fac privat pentru ca am nevoie de functie cand imi fac testele! */
-	std::vector <Film> get_list() const;
 
-	/* this function deletes a movie from the repo
-	ONLY FOR THE ADMIN */
-	void loschen(std::string titel, std::string genre, int jahr);
+	Repo(std::vector <Film*> movies);
 
+	/// getter
+	std::vector<Film*> getVektor() const; // tested
 
-	Film* search_movie(std::string titel, std::string genre, int jahr);
+	void addFilm(string, string, int, int, string); // tested
 
-	/* changes the titel of the movie given as parameter */
-	void bearbeiten_titel(std::string titel, std::string genre, int jahr, std::string new_titel);
+	void deleteMovie(string, string, int);
 
-	/* changes the genre of the movie given as parameter */
-	void bearbeiten_genre(std::string titel, std::string genre, int jahr, std::string new_genre);
+	Film* searchMovie(string, string, int); // tested
 
-	/* changes the year of the movie given as parameter */
-	void bearbeiten_erscheinungsjahr(std::string titel, std::string genre, int jahr, int new_year);
+	void updateTitel(string titel, string genre, int jahr, std::string newTitel);
 
-	/* changes the likes of the movie given as parameter */
-	void bearbeiten_likes(std::string titel, std::string genre, int jahr, int new_likes);
+	void updateGenre(string titel, string genre, int jahr, std::string newGenre);
 
-	/* changes the link of the movie given as parameter */
-	void bearbeiten_link(std::string titel, std::string genre, int jahr, std::string new_link);
+	void updateJahr(string titel, string genre, int jahr, int newJahr);
 
-	/* prints all the movies from the repo (application) */
-	void print_all_movies();
+	void updateLike(string titel, string genre, int jahr, int newLikes);
 
-	/* prints all the movies from the repo (application), which have a specific genre */
-	std::vector<Film> print_all_movies(std::string genre);// get_all_movies -> fara cout si cin
+	void updateLink(string titel, string genre, int jahr, std::string newLink);
 
-	void hunfugen(Film film);
+	Film* makePointer(std::string titel, std::string genre, int jahr, int likes, std::string link);
+
+	bool operator==(Repo other);
 };
 
