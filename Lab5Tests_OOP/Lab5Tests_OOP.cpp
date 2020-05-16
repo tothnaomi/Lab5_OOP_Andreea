@@ -29,6 +29,13 @@ namespace Lab6TestOOP
 
 	TEST_CLASS(RepoTest)
 	{
+		TEST_METHOD(ConstructorTest)
+		{
+			vector<Film*> movies;
+			Repo repo = Repo(movies);
+			Assert::IsTrue(repo.getVektor() == movies);
+		}
+		
 		TEST_METHOD(AddFilm)
 		{
 			vector<Film*> movies;
@@ -39,6 +46,13 @@ namespace Lab6TestOOP
 			Assert::IsTrue(repo.getVektor().size() == 3);
 			Assert::IsTrue(repo.getVektor()[0]->getTitel() == "Hello");
 			Assert::IsTrue(repo.getVektor()[1]->getTitel() == "Jumbo");
+			try
+			{
+				repo.addFilm("Hello", "Drama", 2019, 1245788, "https://www.google.com");
+			}
+			catch (SchonExists & error)
+			{
+			}
 		}
 
 		TEST_METHOD(DeleteFilm)
@@ -132,7 +146,7 @@ namespace Lab6TestOOP
 
 		TEST_METHOD(UpdateTest)
 		{
-			vector<Film*> movies;
+			/*vector<Film*> movies;
 			Repo repo = Repo(movies);
 			Controller cont = Controller(&repo);
 			cont.addMovie("Hello", "Drama", 2019, 1245788, "https://www.google.com");
@@ -140,19 +154,11 @@ namespace Lab6TestOOP
 			cont.addMovie("Skin", "Comedy", 1997, 45678, "https://www.google.com");
 			cont.updateTitel("Hello", "Drama", 2019, "HELLO");
 			Assert::IsTrue(cont.getRepositry().getVektor()[0]->getTitel() == "HELLO");
-			try
-			{
-				repo.updateTitel("Hello", "Drama", 2019, "HELLO");
-			}
-			catch (NotExistsError & error)
-			{
-			}
+			
 			cont.updateGenre("Jumbo", "Love", 2000, "Comedy");
 			Assert::IsTrue(cont.getRepositry().getVektor()[1]->getGenre() == "Comedy");
 			cont.updateJahr("Jumbo", "Comedy", 2000, 2020);
-			Assert::IsTrue(cont.getRepositry().getVektor()[1]->getJahr() == 2020);
-			cont.updateLink("Jumbo", "Comedy", 2020, "HTTPS://WWW.GOOGLE.COM");
-			Assert::IsTrue(cont.getRepositry().getVektor()[1]->getLink() == "HTTPS://WWW.GOOGLE.COM");
+			Assert::IsTrue(cont.getRepositry().getVektor()[1]->getJahr() == 2020);*/
 		}
 	};
 
@@ -197,8 +203,8 @@ namespace Lab6TestOOP
 			watchlist.addMovie(&movie3);
 
 			Assert::IsTrue(watchlist.inWatchlist("Hello", "Drama", 2019) == true);
-			Assert::IsTrue(watchlist.inWatchlist("Jumbo", "Love", 2000) == false);
-			Assert::IsTrue(watchlist.inWatchlist("Skin", "Comedy", 1997) == false);
+			Assert::IsTrue(watchlist.inWatchlist("Jumbo", "Love", 2000) == true);
+			Assert::IsTrue(watchlist.inWatchlist("Skin", "Comedy", 1997) == true);
 
 			Assert::IsTrue(watchlist.inWatchlist("Hi", "Drama", 2019) == false);
 		}

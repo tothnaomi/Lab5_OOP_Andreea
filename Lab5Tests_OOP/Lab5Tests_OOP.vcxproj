@@ -99,8 +99,8 @@
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
-      <AdditionalLibraryDirectories>D:\Documents\Bábes Bolyai\Második félév\Programare\Labor\Lab5_OOP_Andreea\Debug\Lab5_OOP_Andreea.tlog;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>D:\Documents\Bábes Bolyai\Második félév\Programare\Labor\Lab5_OOP_Andreea\Debug\Repository.obj;D:\Documents\Bábes Bolyai\Második félév\Programare\Labor\Lab5_OOP_Andreea\Debug\Controller.obj;D:\Documents\Bábes Bolyai\Második félév\Programare\Labor\Lab5_OOP_Andreea\Debug\Filme.obj;D:\Documents\Bábes Bolyai\Második félév\Programare\Labor\Lab5_OOP_Andreea\Debug\Watchlist.obj;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>D:\Documents\Babes Bolyai\Masodik felev\OOP\Labor\Lab5_OOP_Andreea\Debug\Lab5_OOP_Andreea.tlog;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>D:\Documents\Babes Bolyai\Masodik felev\OOP\Labor\Lab5_OOP_Andreea\Debug\Repository.obj;D:\Documents\Babes Bolyai\Masodik felev\OOP\Labor\Lab5_OOP_Andreea\Debug\Controller.obj;D:\Documents\Babes Bolyai\Masodik felev\OOP\Labor\Lab5_OOP_Andreea\Debug\Filme.obj;D:\Documents\Babes Bolyai\Masodik felev\OOP\Labor\Lab5_OOP_Andreea\Debug\Watchlist.obj;D:\Documents\Babes Bolyai\Masodik felev\OOP\Labor\Lab5_OOP_Andreea\Debug\Error.obj;D:\Documents\Babes Bolyai\Masodik felev\OOP\Labor\Lab5_OOP_Andreea\Debug\Persistor.obj;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
