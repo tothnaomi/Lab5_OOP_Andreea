@@ -4,6 +4,7 @@
 #include "../Controller.h"
 #include <cassert>
 #include "../Watchlist.h"
+/* This is lab6 ! */
 
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 
