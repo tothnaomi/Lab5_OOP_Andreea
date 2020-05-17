@@ -9,11 +9,6 @@ Film::Film(string titel, string genre, int jahr, int like, string link)
 	this->link = link;
 }
 
-void Film::openTheLink(string link)
-{
-	system(std::string("start " + link).c_str());
-}
-
 void Film::setTitel(string neueTitel)
 {
 	this->titel = neueTitel;

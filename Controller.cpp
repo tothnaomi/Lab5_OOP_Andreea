@@ -32,7 +32,7 @@ void Controller::updateGenre(string titel, string genre, int jahr, std::string n
 
 void Controller::updateJahr(string titel, string genre, int jahr, int newJahr)
 {
-	this->updateJahr(titel, genre, jahr, newJahr);
+	this->repo->updateJahr(titel, genre, jahr, newJahr);
 }
 
 void Controller::updateLike(string titel, string genre, int jahr, int newLikes)

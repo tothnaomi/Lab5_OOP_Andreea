@@ -308,7 +308,8 @@ void MenuForTheUser::run()
 		else if (option == 3)
 		{
 			myWatchlist.seeWatchlist();
-			html->openHTML();
+			string str = "start informatii.html";;
+			system(str.c_str());
 		}
 		else if (option == 4)
 		{

@@ -27,13 +27,11 @@ void Watchlist::deleteMovie(string titel, string genre, int jahr)
 		throw err;
 	}
 	for (int i = 0; i < this->list.size(); i++)
-	{
 		if (this->list[i]->getGenre() == genre && this->list[i]->getTitel() == titel && this->list[i]->getJahr() == jahr)
 		{
 			this->list.erase(this->list.begin() + i);
 			break;
 		}
-	}
 }
 
 bool Watchlist::inWatchlist(string titel, string genre, int jahr)

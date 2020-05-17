@@ -13,10 +13,6 @@ private:
 public:
 	virtual vector<Film*> getList() = 0;
 
-	virtual void createFile(string name) = 0;
-
-	virtual void readFromFile() = 0;
-
 	virtual void writeToTheFile() = 0;
 
 	static int convertStringToInt(std::string string); // tested
@@ -32,9 +28,7 @@ public:
 
 	void setList(std::vector<Film*> list);
 
-	void readFromFile() override;
-
-	void createFile(string name) override;
+	void readFromFile();
 
 	void writeToTheFile() override;
 };
@@ -49,13 +43,7 @@ public:
 
 	void setList(std::vector<Film*> list);
 
-	void readFromFile() override;
-
 	void writeToTheFile() override;
-
-	void createFile(string name) override;
-
-	void printAll();
 };
 
 
@@ -69,11 +57,7 @@ public:
 
 	void setList(std::vector<Film*> filme);
 
-	void createFile(string name) override;
-
-	void readFromFile() override;
-
-	void openHTML();
+	//void openHTML();
 
 	void writeToTheFile() override;
 };

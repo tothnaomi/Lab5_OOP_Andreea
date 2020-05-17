@@ -14,7 +14,7 @@ public:
 	void printError() override { std::cout << "This object does not exist!" << endl; }
 };
 
-class FalseParameter : Error
+/*class FalseParameter : Error
 {
 public:
 	void printError() override { std::cout << "The given parameter is not ok!" << endl; }
@@ -23,7 +23,7 @@ public:
 class DivisionByNull : Error
 {
 	void printError() override { std::cout << "Division by null error!" << endl; }
-};
+};*/
 
 class SchonExists : Error
 {

@@ -14,8 +14,6 @@ private:
 public:
 	Film(string, string, int, int, string);
 
-	void openTheLink(string link);
-
 	// setters and getter
 	void setTitel(string neueTitel);
 	void setGenre(string neueGenre);

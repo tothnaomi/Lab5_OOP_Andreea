@@ -15,7 +15,7 @@ void CSV::setList(std::vector<Film*> list)
 	this->list = list;
 }
 
-void CSV::readFromFile()
+/*void CSV::readFromFile()
 {
 	fstream myfile;
 	myfile.open("informatii.csv", ios::in);
@@ -45,7 +45,7 @@ void CSV::readFromFile()
 	}
 	else
 		cout << "Not opened";
-}
+}*/
 
 void CSV::writeToTheFile()
 {
@@ -57,17 +57,12 @@ void CSV::writeToTheFile()
 	}
 }
 
-void CSV::createFile(string name)
+/*void CSV::createFile(string name)
 {
 	fstream file;
 	file.open(name, ios::out | ios::app | ios::in);
-}
+}*/
 
-void CSV::printAll()
-{
-	for (auto elem : this->list)
-		cout << elem->getTitel() << ", " << elem->getGenre() << ", " << elem->getJahr() << ", " << elem->getLike() << ", " << elem->getLink() << endl;
-}
 
 int Persistor::convertStringToInt(std::string string)
 {
@@ -117,10 +112,6 @@ void TXT::readFromFile()
 		cout << "Not opened";
 }
 
-void TXT::createFile(string name)
-{
-}
-
 void TXT::writeToTheFile()
 {
 	fstream myfile;
@@ -130,7 +121,6 @@ void TXT::writeToTheFile()
 		myfile << (*film).getTitel() << "," << (*film).getGenre() << "," << (*film).getJahr() << "," << (*film).getLike() << "," << (*film).getLink() << "," << "\n";
 	}
 }
-
 
 vector<Film*> HTML::getList()
 {
@@ -142,22 +132,13 @@ void HTML::setList(std::vector<Film*> filme)
 	this->list = filme;
 }
 
-void HTML::createFile(string name)
-{
-	fstream html;
-	html.open(name);
-}
 
-void HTML::readFromFile()
-{
-}
-
-void HTML::openHTML()
+/*void HTML::openHTML()
 {
 	string str = "start informatii.html";;
 	system(str.c_str());
-}
-
+}*/
+ 
 void HTML::writeToTheFile()
 {
 	ofstream html;
