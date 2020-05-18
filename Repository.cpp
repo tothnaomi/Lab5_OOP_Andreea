@@ -10,11 +10,6 @@ Repo::Repo(std::vector<Film*> movies)
 	this->liste = movies;
 }
 
-std::vector<Film*> Repo::getVektor() const
-{
-	return this->liste;
-}
-
 template<typename Param, typename Func>
 inline void Repo::update(string titel, string genre, int jahr, Param param, Func lambdaFunc)
 {
@@ -31,10 +26,15 @@ inline void Repo::update(string titel, string genre, int jahr, Param param, Func
 }
 
 
-Film* Repo::makePointer(std::string titel, std::string genre, int jahr, int likes, std::string link)
+Film* Repo::createFilmPtr(std::string titel, std::string genre, int jahr, int likes, std::string link)
 {
 	Film* newFilm = new Film(titel, genre, jahr, likes, link);
 	return newFilm;
+}
+
+std::vector<Film*> Repo::getVektor() const
+{
+	return this->liste;
 }
 
 bool Repo::operator==(Repo other)
@@ -57,7 +57,7 @@ void Repo::addFilm(string titel, string genre, int jahr, int likes, string link)
 	/* we have to verify if the movie is already in the list or not */
 	if (this->searchMovie(titel, genre, jahr) == nullptr)
 	{
-		Film* movie = this->makePointer(titel, genre, jahr, likes, link);
+		Film* movie = this->createFilmPtr(titel, genre, jahr, likes, link);
 		this->liste.push_back(movie);
 	}
 }

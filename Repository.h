@@ -15,18 +15,19 @@ private:
 	void update(string titel, string genre, int jahr, Param param, Func lambdaFunc);
 
 public:
-
+	// constructor
 	Repo(std::vector <Film*> movies);
 
-	/// getter
-	std::vector<Film*> getVektor() const; // tested
-
+	// this function adds a movie if it is not already in the list of movies, else throws an exception from MyException class
 	void addFilm(string, string, int, int, string); // tested
 
-	void deleteMovie(string, string, int);
+	// this function deletes a movie if it is already in the list of movies, else throws an exception from MyException class
+	void deleteMovie(string titel, string genre, int jahr);
 
-	Film* searchMovie(string, string, int); // tested
+	// returns a pointer of a movie from the list of movies, if the given movie is not in the list of movies it will return the nullptr
+	Film* searchMovie(string titel, string genre, int jahr); // tested
 
+	// these 5 functions update a movie given as parameter 
 	void updateTitel(string titel, string genre, int jahr, std::string newTitel);
 
 	void updateGenre(string titel, string genre, int jahr, std::string newGenre);
@@ -37,8 +38,13 @@ public:
 
 	void updateLink(string titel, string genre, int jahr, std::string newLink);
 
-	Film* makePointer(std::string titel, std::string genre, int jahr, int likes, std::string link);
+	// this function creates a pointer for the add function
+	Film* createFilmPtr(std::string titel, std::string genre, int jahr, int likes, std::string link);
 
+	// getter
+	std::vector<Film*> getVektor() const; 
+
+	// operator overload 
 	bool operator==(Repo other);
 };
 

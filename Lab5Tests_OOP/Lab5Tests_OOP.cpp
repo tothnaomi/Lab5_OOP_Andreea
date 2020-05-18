@@ -37,7 +37,7 @@ namespace Lab6TestOOP
 		{
 			vector<Film*> movies;
 			Repo repo = Repo(movies);
-			Assert::IsTrue(repo.getVektor() == movies);
+			//Assert::IsTrue(repo.getVektor() == movies);
 		}
 		
 		TEST_METHOD(AddFilm)
@@ -47,9 +47,10 @@ namespace Lab6TestOOP
 			repo.addFilm("Hello", "Drama", 2019, 1245788, "https://www.google.com");
 			repo.addFilm("Jumbo", "Love", 2000, 45177, "https://www.youtube.com");
 			repo.addFilm("Skin", "Comedy", 1997, 45678, "https://www.google.com");
-			Assert::IsTrue(repo.getVektor().size() == 3);
-			Assert::IsTrue(repo.getVektor()[0]->getTitel() == "Hello");
-			Assert::IsTrue(repo.getVektor()[1]->getTitel() == "Jumbo");
+			//Assert::IsTrue(repo.getVektor().size() == 3);
+			Assert::IsTrue(repo.searchMovie("Hello", "Drama", 2019) != nullptr);
+			Assert::IsTrue(repo.searchMovie("Jumbo", "Love", 2000) != nullptr);
+			Assert::IsTrue(repo.searchMovie("Skin", "Comedy", 1997) != nullptr);
 			try
 			{
 				repo.addFilm("Hello", "Drama", 2019, 1245788, "https://www.google.com");
@@ -67,7 +68,7 @@ namespace Lab6TestOOP
 			repo.addFilm("Jumbo", "Love", 2000, 45177, "https://www.youtube.com");
 			repo.addFilm("Skin", "Comedy", 1997, 45678, "https://www.google.com");
 			repo.deleteMovie("Hello", "Drama", 2019);
-			Assert::IsTrue(repo.getVektor().size() == 2);
+			Assert::IsTrue(repo.searchMovie("Hello", "Drama", 2019) == nullptr);
 			try
 			{
 				repo.deleteMovie("Hello", "Drama", 2019);
@@ -86,7 +87,7 @@ namespace Lab6TestOOP
 			repo.addFilm("Skin", "Comedy", 1997, 45678, "https://www.google.com");
 
 			repo.updateTitel("Hello", "Drama", 2019, "HELLO");
-			Assert::IsTrue(repo.getVektor()[0]->getTitel() == "HELLO");
+			Assert::IsTrue(repo.searchMovie("HELLO", "Drama", 2019) != nullptr);
 			try
 			{
 				repo.updateTitel("Hello", "Drama", 2019, "HELLO");
@@ -96,23 +97,23 @@ namespace Lab6TestOOP
 
 			}
 			repo.updateGenre("Jumbo", "Love", 2000, "Comedy");
-			Assert::IsTrue(repo.getVektor()[1]->getGenre() == "Comedy");
+			Assert::IsTrue(repo.searchMovie("Jumbo", "Comedy", 2000) != nullptr);
 			try
 			{
 				repo.updateGenre("Jumbo", "Love", 2000, "Comedy");
 			}
 			catch (NotExistsError & error) {}
 			repo.updateJahr("Jumbo", "Comedy", 2000, 2020);
-			Assert::IsTrue(repo.getVektor()[1]->getJahr() == 2020);
+			Assert::IsTrue(repo.searchMovie("Jumbo", "Comedy", 2020) != nullptr);
 			try
 			{
 				repo.updateJahr("Jumbo", "Comedy", 2000, 2020);
 			}
 			catch (NotExistsError & err) {}
 			repo.updateLike("Jumbo", "Comedy", 2020, 15554);
-			Assert::IsTrue(repo.getVektor()[1]->getLike() == 15554);
+			Assert::IsTrue(repo.searchMovie("Jumbo", "Comedy", 2020)->getLike() == 15554);
 			repo.updateLink("Jumbo", "Comedy", 2020, "HTTPS://WWW.GOOGLE.COM");
-			Assert::IsTrue(repo.getVektor()[1]->getLink() == "HTTPS://WWW.GOOGLE.COM");
+			Assert::IsTrue(repo.searchMovie("Jumbo", "Comedy", 2020)->getLink() == "HTTPS://WWW.GOOGLE.COM");
 
 			try
 			{
@@ -167,10 +168,9 @@ namespace Lab6TestOOP
 			cont.addMovie("Hello", "Drama", 2019, 1245788, "https://www.google.com");
 			cont.addMovie("Jumbo", "Love", 2000, 45177, "https://www.youtube.com");
 			cont.addMovie("Skin", "Comedy", 1997, 45678, "https://www.google.com");
-			Assert::IsTrue(cont.getRepositry().getVektor().size() == 3);
-			Assert::IsTrue(cont.getRepositry().getVektor()[0]->getTitel() == "Hello");
-			Assert::IsTrue(cont.getRepositry().getVektor()[1]->getTitel() == "Jumbo");
-			Assert::IsTrue(cont.getRepositry().getVektor()[2]->getTitel() == "Skin");
+			Assert::IsTrue(cont.getRepositry().searchMovie("Hello", "Drama", 2019) != nullptr);
+			Assert::IsTrue(cont.getRepositry().searchMovie("Jumbo", "Love", 2000) != nullptr);
+			Assert::IsTrue(cont.getRepositry().searchMovie("Skin", "Comedy", 1997) != nullptr);
 		}
 
 		TEST_METHOD(DeleteTest)
@@ -182,7 +182,7 @@ namespace Lab6TestOOP
 			cont.addMovie("Jumbo", "Love", 2000, 45177, "https://www.youtube.com");
 			cont.addMovie("Skin", "Comedy", 1997, 45678, "https://www.google.com");
 			cont.deleteMovie("Hello", "Drama", 2019);
-			Assert::IsTrue(cont.getRepositry().getVektor().size() == 2);
+			Assert::IsTrue(cont.getRepositry().searchMovie("Hello", "Drama", 2019) == nullptr);
 			try
 			{
 				cont.deleteMovie("Hello", "Drama", 2019);
@@ -191,7 +191,6 @@ namespace Lab6TestOOP
 			{
 
 			}
-			Assert::IsTrue(cont.getRepositry().getVektor().size() == 2);
 		}
 
 		TEST_METHOD(UpdateTest)
@@ -204,7 +203,7 @@ namespace Lab6TestOOP
 			cont.addMovie("Skin", "Comedy", 1997, 45678, "https://www.google.com");
 
 			cont.updateTitel("Hello", "Drama", 2019, "HELLO");
-			Assert::IsTrue(cont.getRepositry().getVektor()[0]->getTitel() == "HELLO");
+			Assert::IsTrue(cont.getRepositry().searchMovie("HELLO", "Drama", 2019) != nullptr);
 			try
 			{
 				cont.updateTitel("Hello", "Drama", 2019, "HELLO");
@@ -214,7 +213,7 @@ namespace Lab6TestOOP
 
 			}
 			cont.updateGenre("Jumbo", "Love", 2000, "Comedy");
-			Assert::IsTrue(cont.getRepositry().getVektor()[1]->getGenre() == "Comedy");
+			Assert::IsTrue(cont.getRepositry().searchMovie("Jumbo", "Comedy", 2000) != nullptr);
 			try
 			{
 				cont.updateGenre("Jumbo", "Love", 2000, "Comedy");
@@ -222,16 +221,16 @@ namespace Lab6TestOOP
 			catch (NotExistsError & error) {}
 
 			cont.updateJahr("Jumbo", "Comedy", 2000, 2020);
-			Assert::IsTrue(cont.getRepositry().getVektor()[1]->getJahr() == 2020);
+			Assert::IsTrue(cont.getRepositry().searchMovie("Jumbo", "Comedy", 2020) != nullptr);
 			try
 			{
 				cont.updateJahr("Jumbo", "Comedy", 2000, 2020);
 			}
 			catch (NotExistsError & err) {}
 			cont.updateLike("Jumbo", "Comedy", 2020, 15554);
-			Assert::IsTrue(cont.getRepositry().getVektor()[1]->getLike() == 15554);
+			Assert::IsTrue(cont.getRepositry().searchMovie("Jumbo", "Comedy", 2020)->getLike() == 15554);
 			cont.updateLink("Jumbo", "Comedy", 2020, "HTTPS://WWW.GOOGLE.COM");
-			Assert::IsTrue(cont.getRepositry().getVektor()[1]->getLink() == "HTTPS://WWW.GOOGLE.COM");
+			Assert::IsTrue(cont.getRepositry().searchMovie("Jumbo", "Comedy", 2020)->getLink() == "HTTPS://WWW.GOOGLE.COM");
 
 			try
 			{
