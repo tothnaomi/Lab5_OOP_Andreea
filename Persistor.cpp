@@ -108,8 +108,8 @@ void TXT::readFromFile()
 			this->list.push_back(newFilm);
 		}
 	}
-	else
-		cout << "Not opened";
+	/*else
+		cout << "Not opened";*/
 }
 
 void TXT::writeToTheFile()
